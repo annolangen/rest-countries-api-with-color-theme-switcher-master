@@ -1,0 +1,305 @@
+/* ==========================================================================
+   1. CSS Custom Properties (Variables)
+   ========================================================================== */
+
+:root {
+  /* Typography */
+  --font-family: "Nunito Sans", sans-serif;
+  --fs-homepage: 14px;
+  --fs-detail: 16px;
+  --fw-light: 300;
+  --fw-semi-bold: 600;
+  --fw-bold: 800;
+
+  /* Light Mode Colors */
+  --clr-background: hsl(0, 0%, 98%);
+  --clr-elements: hsl(0, 0%, 100%);
+  --clr-text: hsl(200, 15%, 8%);
+  --clr-input: hsl(0, 0%, 52%);
+  --clr-shadow: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] {
+  /* Dark Mode Colors */
+  --clr-background: hsl(207, 26%, 17%);
+  --clr-elements: hsl(209, 23%, 22%);
+  --clr-text: hsl(0, 0%, 100%);
+  --clr-input: hsl(0, 0%, 100%);
+  --clr-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   2. Resets and Base Styles
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--fs-homepage);
+  font-weight: var(--fw-light);
+  background-color: var(--clr-background);
+  color: var(--clr-text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: var(--fw-bold);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   3. Components
+   ========================================================================== */
+
+.topbar {
+  width: 100%;
+  background-color: var(--clr-elements);
+  box-shadow: 0 2px 4px var(--clr-shadow);
+  padding: 1.5rem 5vw; /* Use viewport width for responsive padding */
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar .left {
+  font-weight: var(--fw-bold);
+  font-size: clamp(1rem, 4vw, 1.5rem); /* Responsive font size */
+}
+
+.topbar .right {
+  font-weight: var(--fw-semi-bold);
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.theme-switcher-icon {
+  width: 1rem;
+  height: 1rem;
+  /* Use the current text color for the icon */
+  fill: var(--clr-text);
+}
+/* ==========================================================================
+   4. Detail Page
+   ========================================================================== */
+
+main.container {
+  padding: 3rem 5vw;
+  max-width: 1440px; /* Max width from style-guide */
+  margin-inline: auto; /* Center horizontally */
+}
+
+.country-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 4rem;
+  align-items: center;
+}
+
+.country-flag {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.country-name {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 960px) {
+  .details-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.info {
+  line-height: 1.8;
+  font-size: var(--fs-detail);
+}
+
+.label {
+  font-weight: var(--fw-semi-bold);
+  margin-right: 0.5ch;
+}
+
+.border-countries {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.border-countries-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.border-country,
+.back-button {
+  background-color: var(--clr-elements);
+  box-shadow: 0 1px 4px var(--clr-shadow);
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  border: none;
+}
+
+.back-button {
+  margin-bottom: 4rem;
+}
+
+/* ==========================================================================
+   5. Home Page
+   ========================================================================== */
+
+.input-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2.5rem; /* 40px */
+  margin-bottom: 3rem;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 4px var(--clr-shadow);
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: var(--clr-elements);
+  width: 100%;
+  max-width: 480px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--clr-input);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  border: none;
+  background: none;
+  padding: 1.125rem 2rem 1.125rem 4.5rem; /* 18px 32px 18px 72px */
+  font-size: var(--fs-homepage);
+}
+
+.search-input::placeholder {
+  color: var(--clr-input);
+}
+
+.filter-button {
+  background-color: var(--clr-elements);
+  box-shadow: 0 1px 4px var(--clr-shadow);
+  padding: 1.125rem 1.5rem; /* 18px 24px */
+  border-radius: 4px;
+  border: none;
+  min-width: 200px;
+  text-align: left;
+  position: relative;
+}
+
+.filter-button::after {
+  content: '▾'; /* simple dropdown arrow */
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   6. Country Cards
+   ========================================================================== */
+
+.countries-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 4.5rem; /* 72px */
+}
+
+.country-card {
+  background-color: var(--clr-elements);
+  border-radius: 4px;
+  box-shadow: 0 1px 4px var(--clr-shadow);
+  overflow: hidden; /* to make border-radius work with the image */
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.country-card:hover {
+  transform: translateY(-5px);
+}
+
+.country-card .country-flag {
+  /* The flag image inside the card */
+  aspect-ratio: 1.6 / 1; /* common flag ratio */
+  object-fit: cover;
+  width: 100%;
+}
+
+.country-card .details-text-container {
+  padding: 1.5rem 1.5rem 2.875rem; /* 24px 24px 46px */
+}
+
+.country-card .country-name {
+  font-size: 1.125rem; /* 18px */
+  margin-bottom: 1rem;
+}
+
+.country-card .info {
+  line-height: 1.6;
+  font-size: var(--fs-homepage);
+}

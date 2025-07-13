@@ -1,0 +1,28 @@
+{
+  "name": "rest-countries-api-with-color-theme-switcher-master",
+  "version": "1.0.0",
+  "description": "![Design preview for the REST Countries API with color theme switcher coding challenge](preview.jpg)",
+  "scripts": {
+    "format": "prettier --write \"src/**/*.{js,ts,html}\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annolangen/rest-countries-api-with-color-theme-switcher-master.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/annolangen/rest-countries-api-with-color-theme-switcher-master/issues"
+  },
+  "homepage": "https://github.com/annolangen/rest-countries-api-with-color-theme-switcher-master#readme",
+  "dependencies": {
+    "lit-html": "^3.3.1",
+    "parcel": "^2.15.4"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}

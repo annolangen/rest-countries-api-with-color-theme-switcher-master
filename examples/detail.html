@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Page - REST Countries API</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- This path assumes the examples folder is at the root, next to src -->
+    <link rel="stylesheet" href="../src/styles/style.css" />
+  </head>
+  <body data-theme="dark">
+    <header class="topbar">
+      <h1 class="left">Where in the world?</h1>
+      <button class="right theme-switcher">🌙 Dark Mode</button>
+    </header>
+
+    <main class="container">
+      <button class="back-button">&larr;&nbsp; Back</button>
+      <div class="country-details">
+        <img
+          src="https://flagcdn.com/be.svg"
+          alt="Flag of Belgium"
+          class="country-flag"
+        />
+        <div class="details-text-container">
+          <h2 class="country-name">Belgium</h2>
+          <div class="details-grid">
+            <div>
+              <p class="info">
+                <span class="label">Native Name:</span>
+                <span class="value">België</span>
+              </p>
+              <p class="info">
+                <span class="label">Population:</span>
+                <span class="value">11,319,511</span>
+              </p>
+              <p class="info">
+                <span class="label">Region:</span>
+                <span class="value">Europe</span>
+              </p>
+              <p class="info">
+                <span class="label">Sub Region:</span>
+                <span class="value">Western Europe</span>
+              </p>
+              <p class="info">
+                <span class="label">Capital:</span>
+                <span class="value">Brussels</span>
+              </p>
+            </div>
+            <div>
+              <p class="info">
+                <span class="label">Top Level Domain:</span>
+                <span class="value">.be</span>
+              </p>
+              <p class="info">
+                <span class="label">Currencies:</span>
+                <span class="value">Euro</span>
+              </p>
+              <p class="info">
+                <span class="label">Languages:</span>
+                <span class="value">Dutch, French, German</span>
+              </p>
+            </div>
+          </div>
+          <div class="border-countries">
+            <h3 class="label">Border Countries:</h3>
+            <div class="border-countries-container">
+              <button class="border-country">France</button>
+              <button class="border-country">Germany</button>
+              <button class="border-country">Netherlands</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
