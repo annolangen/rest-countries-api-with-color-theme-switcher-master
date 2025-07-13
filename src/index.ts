@@ -237,3 +237,38 @@ const renderBody = () =>
   );
 renderBody();
 window.onclick = window.oninput = window.onchange = renderBody;
+
+async function restFetch() {
+  // Merge two responses to work around 10 field limit.
+  try {
+    const response = await fetch(
+      "https://restcountries.com/v2/all?fields=name,population,region,capital,alpha3Code,flag"
+    );
+    if (!response.ok) {
+      throw new Error(`Failed to fetch countries: ${response.statusText}`);
+    }
+    const byCode = new Map<string, any>();
+    (await response.json()).forEach(country =>
+      byCode.set(country.alpha3Code, country)
+    );
+    const detailResponse = await fetch(
+      "https://restcountries.com/v2/all?fields=borders,nativeName,subregion,topLevelDomain,currencies,languages,alpha3Code"
+    );
+    if (!detailResponse.ok) {
+      throw new Error(
+        `Failed to fetch country details: ${detailResponse.statusText}`
+      );
+    }
+    state.data = (await detailResponse.json()).map(country => ({
+      ...country,
+      ...byCode.get(country.alpha3Code),
+    }));
+    renderBody();
+  } catch (e) {
+    console.error("Failed to fetch countries from API.", e);
+    // The app will continue to work with the local data if the fetch fails.
+  }
+}
+restFetch(); // Fetch data from the REST API on startup
+// Refresh data every hour
+setInterval(restFetch, 1000 * 60 * 60);
