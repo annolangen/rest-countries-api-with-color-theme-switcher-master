@@ -38,8 +38,7 @@ const countryByCode = (() => {
     const currentData = allCountries();
     if (currentData !== origin || cache.size === 0) {
       origin = currentData;
-      cache.clear();
-      currentData.forEach(c => cache.set(c.alpha3Code, c));
+      cache = new Map(currentData.map(c => [c.alpha3Code, c]));
     }
     return cache;
   };
@@ -241,25 +240,28 @@ window.onclick = window.oninput = window.onchange = renderBody;
 async function restFetch() {
   // Merge two responses to work around 10 field limit.
   try {
-    const response = await fetch(
-      "https://restcountries.com/v2/all?fields=name,population,region,capital,alpha3Code,flag"
-    );
+    const [response, detailResponse] = await Promise.all([
+      fetch(
+        "https://restcountries.com/v2/all?fields=name,population,region,capital,alpha3Code,flag"
+      ),
+      fetch(
+        "https://restcountries.com/v2/all?fields=borders,nativeName,subregion,topLevelDomain,currencies,languages,alpha3Code"
+      ),
+    ]);
     if (!response.ok) {
       throw new Error(`Failed to fetch countries: ${response.statusText}`);
     }
-    const byCode = new Map<string, any>();
-    (await response.json()).forEach(country =>
-      byCode.set(country.alpha3Code, country)
-    );
-    const detailResponse = await fetch(
-      "https://restcountries.com/v2/all?fields=borders,nativeName,subregion,topLevelDomain,currencies,languages,alpha3Code"
-    );
     if (!detailResponse.ok) {
       throw new Error(
         `Failed to fetch country details: ${detailResponse.statusText}`
       );
     }
-    state.data = (await detailResponse.json()).map(country => ({
+    const [countries, countryDetails] = await Promise.all([
+      response.json(),
+      detailResponse.json(),
+    ]);
+    const byCode = new Map<string, any>(countries.map(c => [c.alpha3Code, c]));
+    state.data = countryDetails.map(country => ({
       ...country,
       ...byCode.get(country.alpha3Code),
     }));
