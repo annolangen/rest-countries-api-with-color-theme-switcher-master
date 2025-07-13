@@ -3,6 +3,36 @@ import data from "../data.json" assert { type: "json" };
 
 const defaultLocaleFormatter = new Intl.NumberFormat();
 
+// Unique regions sorted:
+const regions = [...new Set(data.map(country => country.region))]
+  .filter(Boolean) // In case any region is an empty string
+  .sort();
+
+const state = {
+  searchTerm: "",
+  selectedRegion: null as string | null,
+  filterMenuOpen: false,
+  get filterCountries() {
+    if (this.selectedRegion) {
+      if (this.searchTerm) {
+        return country =>
+          country.region === this.selectedRegion &&
+          country.name.toLowerCase().includes(this.searchTerm);
+      }
+      return country => country.region === this.selectedRegion;
+    }
+    if (this.searchTerm) {
+      return country => country.name.toLowerCase().includes(this.searchTerm);
+    }
+    return () => true;
+  },
+};
+
+function selectRegion(region) {
+  state.selectedRegion = region;
+  state.filterMenuOpen = false;
+}
+
 function countryCardHtml(country) {
   return html`<div class="country-card">
     <img src=${country.flags.svg} class="country-flag" />
@@ -51,12 +81,38 @@ function homeHtml() {
           <input
             type="search"
             placeholder="Search for a country..."
+            .value=${state.searchTerm}
+            @input=${e => (state.searchTerm = e.target.value.toLowerCase())}
             class="search-input"
           />
         </div>
-        <button type="button" class="filter-button">Filter by Region</button>
+        <div class="filter-dropdown">
+          <button
+            type="button"
+            class="filter-button"
+            @click=${() => (state.filterMenuOpen = !state.filterMenuOpen)}
+            @blur=${() => (state.filterMenuOpen = false)}
+          >
+            ${state.selectedRegion || "Filter by Region"}
+          </button>
+          ${state.filterMenuOpen
+            ? html`
+                <ul class="filter-options">
+                  <li @click=${() => selectRegion(null)}>All Regions</li>
+                  ${regions.map(
+                    region =>
+                      html`<li @click=${() => selectRegion(region)}>
+                        ${region}
+                      </li>`
+                  )}
+                </ul>
+              `
+            : ""}
+        </div>
       </form>
-      <div class="countries-grid">${data.map(countryCardHtml)}</div>
+      <div class="countries-grid">
+        ${data.filter(state.filterCountries).map(countryCardHtml)}
+      </div>
     </main>
   `;
 }

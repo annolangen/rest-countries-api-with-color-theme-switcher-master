@@ -4,6 +4,7 @@
   "description": "![Design preview for the REST Countries API with color theme switcher coding challenge](preview.jpg)",
   "scripts": {
     "format": "prettier --write \"src/**/*.{js,ts,html}\"",
+    "dev": "parcel src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
