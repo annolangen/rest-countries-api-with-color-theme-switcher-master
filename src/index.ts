@@ -11,7 +11,6 @@ const regions = [...new Set(data.map(country => country.region))]
 const state = {
   searchTerm: "",
   selectedRegion: null as string | null,
-  filterMenuOpen: false,
   get filterCountries() {
     if (this.selectedRegion) {
       if (this.searchTerm) {
@@ -30,7 +29,14 @@ const state = {
 
 function selectRegion(region) {
   state.selectedRegion = region;
-  state.filterMenuOpen = false;
+}
+
+function toggleTheme() {
+  if (document.body.hasAttribute("data-theme")) {
+    document.body.removeAttribute("data-theme");
+  } else {
+    document.body.setAttribute("data-theme", "dark");
+  }
 }
 
 function countryCardHtml(country) {
@@ -60,7 +66,9 @@ function homeHtml() {
   return html`
     <header class="topbar">
       <h1 class="left">Where in the world?</h1>
-      <button class="right theme-switcher">🌙 Dark Mode</button>
+      <button class="right theme-switcher" @click=${toggleTheme}>
+        🌙 Dark Mode
+      </button>
     </header>
     <main class="container">
       <form class="input-container">
@@ -86,29 +94,15 @@ function homeHtml() {
             class="search-input"
           />
         </div>
-        <div class="filter-dropdown">
-          <button
-            type="button"
-            class="filter-button"
-            @click=${() => (state.filterMenuOpen = !state.filterMenuOpen)}
-            @blur=${() => (state.filterMenuOpen = false)}
-          >
-            ${state.selectedRegion || "Filter by Region"}
-          </button>
-          ${state.filterMenuOpen
-            ? html`
-                <ul class="filter-options">
-                  <li @click=${() => selectRegion(null)}>All Regions</li>
-                  ${regions.map(
-                    region =>
-                      html`<li @click=${() => selectRegion(region)}>
-                        ${region}
-                      </li>`
-                  )}
-                </ul>
-              `
-            : ""}
-        </div>
+        <select
+          class="filter-button"
+          @change=${e => (state.selectedRegion = e.target.value)}
+        >
+          <option value="">
+            ${state.selectedRegion ? "All Regions" : "Filter by Region"}
+          </option>
+          ${regions.map(region => html`<option>${region}</option>`)}
+        </select>
       </form>
       <div class="countries-grid">
         ${data.filter(state.filterCountries).map(countryCardHtml)}
@@ -119,4 +113,4 @@ function homeHtml() {
 
 const renderBody = () => render(homeHtml(), document.body);
 renderBody();
-window.onclick = window.oninput = renderBody;
+window.onclick = window.oninput = window.onchange = renderBody;
