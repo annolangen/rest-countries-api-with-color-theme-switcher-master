@@ -112,20 +112,14 @@ button {
   gap: 0.5rem;
 }
 
-.theme-switcher-icon {
-  width: 1rem;
-  height: 1rem;
-  /* Use the current text color for the icon */
-  fill: var(--clr-text);
-}
 /* ==========================================================================
    4. Detail Page
    ========================================================================== */
 
 main.container {
-  padding: 3rem 5vw;
   max-width: 1440px; /* Max width from style-guide */
   margin-inline: auto; /* Center horizontally */
+  padding: 3rem clamp(1.25rem, 5vw, 4.5rem);
 }
 
 .country-details {
@@ -240,18 +234,15 @@ main.container {
   color: var(--clr-input);
 }
 
-.filter-button {
+.filter-wrapper {
   background-color: var(--clr-elements);
   box-shadow: 0 1px 4px var(--clr-shadow);
-  padding: 1.125rem 1.5rem; /* 18px 24px */
   border-radius: 4px;
-  border: none;
   min-width: 200px;
-  text-align: left;
   position: relative;
 }
 
-.filter-button::after {
+.filter-wrapper::after {
   content: '▾'; /* simple dropdown arrow */
   position: absolute;
   right: 1.5rem;
@@ -260,6 +251,21 @@ main.container {
   pointer-events: none;
 }
 
+.filter-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 1.125rem 1.5rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+.filter-select option {
+  background-color: var(--clr-elements);
+  color: var(--clr-text);
+}
 /* ==========================================================================
    6. Country Cards
    ========================================================================== */
