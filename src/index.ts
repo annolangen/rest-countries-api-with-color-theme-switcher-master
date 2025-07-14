@@ -55,9 +55,15 @@ function toggleTheme() {
 function countryCardHtml(country) {
   return html`<div
     class="country-card"
+    role="button"
+    tabindex="0"
     @click=${() => (state.detailCountry = country)}
   >
-    <img src=${country.flag} class="country-flag" />
+    <img
+      src=${country.flag}
+      alt="Flag of ${country.name}"
+      class="country-flag"
+    />
     <div class="details-text-container">
       <h2 class="country-name">${country.name}</h2>
       <p class="info">
@@ -82,8 +88,8 @@ function countryCardHtml(country) {
 const headerHtml = () =>
   html` <header class="topbar">
     <h1 class="left">Where in the world?</h1>
-    <button class="right theme-switcher" @click=${toggleTheme}>
-      <span style="display:flex;gap: 0.5rem">
+    <button type="button" class="right theme-switcher" @click=${toggleTheme}>
+      <span class="theme-switcher-content">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -108,7 +114,7 @@ function homeHtml() {
   return html`
     ${headerHtml()}
     <main class="container">
-      <form class="input-container">
+      <div class="input-container">
         <div class="search-input-wrapper">
           <!-- Search Icon -->
           <svg
@@ -142,7 +148,7 @@ function homeHtml() {
             ${regions.map(region => html`<option>${region}</option>`)}
           </select>
         </div>
-      </form>
+      </div>
       <div class="countries-grid">
         ${selectedCountries().map(countryCardHtml)}
       </div>
@@ -152,6 +158,7 @@ function homeHtml() {
 
 const borderCountryHtml = country =>
   html`<button
+    type="button"
     class="border-country"
     @click=${() => (state.detailCountry = country)}
   >
@@ -172,9 +179,13 @@ function borderCountriesHtml(country) {
 function detailHtml(country) {
   return html`${headerHtml()}
     <main class="container">
-      <button class="back-button" @click=${() => (state.detailCountry = null)}>&larr;&nbsp; Back</button>
+      <button
+        type="button"
+        class="back-button"
+        @click=${() => (state.detailCountry = null)}
+      >&larr;&nbsp; Back</button>
       <div class="country-details">
-        <img src=${country.flag} class="country-flag" />
+        <img src=${country.flag} alt="Flag of ${country.name}" class="country-flag" />
         <div class="details-text-container">
           <h2 class="country-name">${country.name}</h2>
           <div class="details-grid">
